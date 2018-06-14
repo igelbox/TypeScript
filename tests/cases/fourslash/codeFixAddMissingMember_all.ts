@@ -10,17 +10,17 @@
 
 verify.codeFixAll({
     fixId: "addMissingMember",
+    fixAllDescription: "Add all missing members",
     newFileContent:
-    // TODO: GH#18445
 `class C {
-    x: number;\r
-    y(): any {\r
-        throw new Error("Method not implemented.");\r
-    }\r
+    x: number;
     method() {
         this.x = 0;
         this.y();
         this.x = "";
+    }
+    y(): any {
+        throw new Error("Method not implemented.");
     }
 }`,
 });

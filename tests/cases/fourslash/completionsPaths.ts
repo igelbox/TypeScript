@@ -23,8 +23,5 @@
 // @Filename: /src/folder/4.ts
 ////const foo = require(`x//*4*/`);
 
-verify.completionsAt("1", ["y", "x"]);
-verify.completionsAt("2", ["bar", "foo"]);
-verify.completionsAt("3", ["bar", "foo"]);
-verify.completionsAt("4", ["bar", "foo"]);
-
+verify.completionsAt("1", ["y", "x"], { isNewIdentifierLocation: true });
+verify.completionsAt(["2", "3", "4"], ["bar", "foo"], { isNewIdentifierLocation: true });

@@ -1,4 +1,4 @@
-/// <reference path="lib.es2015.symbol.d.ts" />
+/// <reference lib="es2015.symbol" />
 
 interface SymbolConstructor {
     /**
@@ -180,7 +180,7 @@ interface SetConstructor {
     new <T>(iterable: Iterable<T>): Set<T>;
 }
 
-interface WeakSet<T> { }
+interface WeakSet<T extends object> { }
 
 interface WeakSetConstructor {
     new <T extends object>(iterable: Iterable<T>): WeakSet<T>;
