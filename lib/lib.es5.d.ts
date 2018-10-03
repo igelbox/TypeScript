@@ -1299,7 +1299,7 @@ interface ArrayConstructor {
     <T>(arrayLength: number): T[];
     <T>(...items: T[]): T[];
     isArray(arg: any): arg is Array<any>;
-    readonly prototype: Array<any>;
+    prototype: Array<any>;
 }
 
 declare const Array: ArrayConstructor;

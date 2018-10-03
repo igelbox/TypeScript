@@ -5296,7 +5296,15 @@ namespace ts {
 
         function addInheritedMembers(symbols: SymbolTable, baseSymbols: Symbol[]) {
             for (const s of baseSymbols) {
-                if (!symbols.has(s.name)) {
+                const overriding = symbols.get(s.name);
+                if (overriding) {
+                    if ((overriding.flags & SymbolFlags.Accessor) && (s.flags & SymbolFlags.Accessor)) {
+                        const merged = cloneSymbol(overriding);
+                        merged.flags |= s.flags;
+                        merged.declarations.push(...s.declarations);
+                        symbols.set(s.name, merged);
+                    }
+                } else {
                     symbols.set(s.name, s);
                 }
             }
@@ -9325,6 +9333,15 @@ namespace ts {
                             else if (sourcePropFlags & ModifierFlags.Protected) {
                                 if (reportErrors) {
                                     reportError(Diagnostics.Property_0_is_protected_in_type_1_but_public_in_type_2,
+                                        symbolToString(targetProp), typeToString(source), typeToString(target));
+                                }
+                                return Ternary.False;
+                            }
+                            const sourceIsReadonly = (sourceProp.flags & SymbolFlags.GetAccessor) && !(sourceProp.flags & SymbolFlags.SetAccessor);
+                            const targetIsReadonly = (targetProp.flags & SymbolFlags.GetAccessor) && !(targetProp.flags & SymbolFlags.SetAccessor);
+                            if (!targetIsReadonly && sourceIsReadonly) {
+                                if (reportErrors) {
+                                    reportError(Diagnostics.Property_0_is_readonly_in_type_1_but_writable_in_type_2,
                                         symbolToString(targetProp), typeToString(source), typeToString(target));
                                 }
                                 return Ternary.False;

@@ -1879,6 +1879,10 @@
         "category": "Error",
         "code": 2558
     },
+    "Property '{0}' is readonly in type '{1}' but writable in type '{2}'.": {
+        "category": "Error",
+        "code": 2559
+    },
     "JSX element attributes type '{0}' may not be a union type.": {
         "category": "Error",
         "code": 2600
